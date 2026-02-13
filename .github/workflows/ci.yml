@@ -40,5 +40,13 @@ jobs:
           DB_CONNECTION: sqlite
           DB_DATABASE: database/database.sqlite
 
-      - name: Run tests
-        run: php artisan test
+      - name: Run tests (verbose)
+        run: php artisan test -v
+
+      - name: Print Laravel logs if tests fail
+        if: failure()
+        run: |
+          echo "---- Laravel log (if exists) ----"
+          ls -la storage/logs || true
+          cat storage/logs/laravel.log || true
+
